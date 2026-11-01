@@ -261,3 +261,67 @@ function calculatePersonalIncomeTax() {
         <p>Thuế thu nhập cá nhân: ${tax.toLocaleString("vi-VN")} VNĐ</p>
     `;
 }
+
+//Ẩn trường Số kết nối khi chọn loại khách hàng là Cá nhân hoặc không chọn loại khách hàng
+function toggleConnections() {
+  const customerType = document.getElementById("customerType").value;
+  const connectionsGroup = document.getElementById("connectionsGroup");
+
+  if (customerType === "business") {
+    connectionsGroup.classList.remove("hidden");
+  } else {
+    connectionsGroup.classList.add("hidden");
+    document.getElementById("connections").value = "";
+  }
+}
+/**
+ * bài tập 4: Tính tiền cáp
+ *
+ * input:
+ * - Loại khách hàng: Cá nhân, Doanh nghiệp
+ * - Mã khách hàng: chuỗi
+ * - Số kênh cao cấp: Số >=0
+ * - if loại khách hàng là doanh nghiệp thì thêm trường Số kết nối: Số >=0
+ *
+ *
+ * xử lý:
+ * if (loại khách hàng == cá nhân) {
+ *   tiền cáp = phí xử lý hóa đơn 4.5$ + phí dịch vụ cơ bản 20.5$+ (số kênh cao cấp * phí kênh cao cấp 7.5$)}
+ * else if (loại khách hàng == doanh nghiệp) {
+ *  if (số kết nối <= 10) {
+ *    tiền cáp = phí xử lý hóa đơn 15$ + phí dịch vụ cơ bản 75$ + (số kênh cao cấp * phí kênh cao cấp 50$)
+ *  } else {
+ *    tiền cáp = phí xử lý hóa đơn 15$ + phí dịch vụ cơ bản 75$ + (Số kết nối - 10) *5$ + (số kênh cao cấp * phí kênh cao cấp 50$)
+ *  }
+ * else { // alert "Hãy chọn loại khách hàng"}
+ *
+ * output:
+ * - Mã khách hàng: xxx
+ * - Tiền cáp: xxx VNĐ
+ */
+
+function calculateCableBill() {
+  const customerType = document.getElementById("customerType").value;
+  const customerId = document.getElementById("customerId").value;
+  const premiumChannels = document.getElementById("premiumChannels").value * 1;
+  const connections = document.getElementById("connections").value * 1;
+  let cableBill = 0;
+
+  if (customerType === "residential") {
+    cableBill = 4.5 + 20.5 + premiumChannels * 7.5;
+  } else if (customerType === "business") {
+    if (connections <= 10) {
+      cableBill = 15 + 75 + premiumChannels * 50;
+    } else {
+      cableBill = 15 + 75 + (connections - 10) * 5 + premiumChannels * 50;
+    }
+  } else {
+    alert("Hãy chọn loại khách hàng");
+  }
+  const resultDiv = document.getElementById("cableResult");
+  resultDiv.innerHTML = `
+        👉 Kết quả:
+        <p>Mã khách hàng: ${customerId}</p>
+        <p>Tiền cáp: ${cableBill.toLocaleString("en-US")} $</p>
+    `;
+}

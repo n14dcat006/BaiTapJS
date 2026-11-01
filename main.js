@@ -151,3 +151,113 @@ function calculateElectricity() {
         <p>Số tiền điện: ${electricityBill.toLocaleString("vi-VN")} VNĐ</p>
     `;
 }
+
+/**
+ * Bài tập 3: Tính thuế thu nhập cá nhân
+ * input:
+ * Họ tên: Chuỗi
+ * Tổng thu nhập năm: Số >=0
+ * Số người phụ thuộc: Số >=0
+ *
+ * xử lý:
+ * tạo biến thu nhập chịu thuế = tổng thu nhập năm - 4tr - (số người phụ thuộc * 1.6tr)
+ * if (thu nhập chịu thuế <= 60tr) {
+ *   thuế thu nhập cá nhân = thu nhập chịu thuế * 5%}
+ * else if (thu nhập chịu thuế <= 120tr) {
+ *  thuế thu nhập cá nhân = 60tr * 5% + (thu nhập chịu thuế - 60tr) * 10%}
+ * else if (thu nhập chịu thuế <= 210tr) {
+ *  thuế thu nhập cá nhân = 60tr * 5% + 60tr * 10% + (thu nhập chịu thuế - 120tr) * 15%}
+ * else if (thu nhập chịu thuế <= 384tr) {
+ * thuế thu nhập cá nhân = 60tr * 5% + 60tr * 10% + 90tr * 15% + (thu nhập chịu thuế - 210tr) * 20%}
+ * else if (thu nhập chịu thuế <= 624tr) {
+ * thuế thu nhập cá nhân = 60tr * 5% + 60tr * 10% + 90tr * 15% + 174tr * 20% + (thu nhập chịu thuế - 384tr) * 25%}
+ * else if (thu nhập chịu thuế <= 960tr) {
+ * thuế thu nhập cá nhân = 60tr * 5% + 60tr * 10% + 90tr * 15% + 174tr * 20% + 240tr * 25% + (thu nhập chịu thuế - 624tr) * 30%}
+ * else {
+ * thuế thu nhập cá nhân = 60tr * 5% + 60tr * 10% + 90tr * 15% + 174tr * 20% + 240tr * 25% + 336tr * 30% + (thu nhập chịu thuế - 960tr) * 35%}
+ *
+ * Output:
+ * Họ tên: xxx
+ * Thuế thu nhập cá nhân: xxx VNĐ
+ */
+
+function tier1Tax(income) {
+  return income * 0.05;
+}
+function tier2Tax(income) {
+  return 60000000 * 0.05 + (income - 60000000) * 0.1;
+}
+function tier3Tax(income) {
+  return 60000000 * 0.05 + 60000000 * 0.1 + (income - 120000000) * 0.15;
+}
+function tier4Tax(income) {
+  return (
+    60000000 * 0.05 +
+    60000000 * 0.1 +
+    90000000 * 0.15 +
+    (income - 210000000) * 0.2
+  );
+}
+function tier5Tax(income) {
+  return (
+    60000000 * 0.05 +
+    60000000 * 0.1 +
+    90000000 * 0.15 +
+    174000000 * 0.2 +
+    (income - 384000000) * 0.25
+  );
+}
+function tier6Tax(income) {
+  return (
+    60000000 * 0.05 +
+    60000000 * 0.1 +
+    90000000 * 0.15 +
+    174000000 * 0.2 +
+    240000000 * 0.25 +
+    (income - 624000000) * 0.3
+  );
+}
+function tier7Tax(income) {
+  return (
+    60000000 * 0.05 +
+    60000000 * 0.1 +
+    90000000 * 0.15 +
+    174000000 * 0.2 +
+    240000000 * 0.25 +
+    336000000 * 0.3 +
+    (income - 960000000) * 0.35
+  );
+}
+function calculatePersonalIncomeTax() {
+  const fullName = document.getElementById("fullName").value;
+  const annualIncome = document.getElementById("annualIncome").value * 1;
+  const dependents = document.getElementById("dependents").value * 1;
+
+  const taxableIncome = annualIncome - 4000000 - dependents * 1600000;
+
+  let tax = 0;
+  if (taxableIncome <= 0) {
+    tax = 0;
+  } else if (taxableIncome <= 60000000) {
+    tax = tier1Tax(taxableIncome);
+  } else if (taxableIncome <= 120000000) {
+    tax = tier2Tax(taxableIncome);
+  } else if (taxableIncome <= 210000000) {
+    tax = tier3Tax(taxableIncome);
+  } else if (taxableIncome <= 384000000) {
+    tax = tier4Tax(taxableIncome);
+  } else if (taxableIncome <= 624000000) {
+    tax = tier5Tax(taxableIncome);
+  } else if (taxableIncome <= 960000000) {
+    tax = tier6Tax(taxableIncome);
+  } else {
+    tax = tier7Tax(taxableIncome);
+  }
+
+  const resultDiv = document.getElementById("incomeTaxResult");
+  resultDiv.innerHTML = `
+        👉 Kết quả:
+        <p>Họ tên: ${fullName}</p>
+        <p>Thuế thu nhập cá nhân: ${tax.toLocaleString("vi-VN")} VNĐ</p>
+    `;
+}

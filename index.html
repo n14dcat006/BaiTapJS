@@ -1,11 +1,687 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Bài Tập JS Buổi 5</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <!-- Flowbite CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
   </head>
-  <body>
+  <body class="bg-gray-100 min-h-screen">
+    <main class="max-w-4xl mx-auto px-4 py-8">
+      <!-- TABS -->
+      <div class="mb-4 border-b border-gray-200">
+        <ul
+          class="flex flex-wrap -mb-px text-sm font-medium text-center"
+          id="exerciseTabs"
+          data-tabs-toggle="#exerciseTabContent"
+          role="tablist"
+        >
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg"
+              id="admission-tab"
+              data-tabs-target="#admission"
+              type="button"
+              role="tab"
+              aria-controls="admission"
+              aria-selected="true"
+            >
+              Bài 1
+            </button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+              id="electricity-tab"
+              data-tabs-target="#electricity"
+              type="button"
+              role="tab"
+              aria-controls="electricity"
+              aria-selected="false"
+            >
+              Bài 2
+            </button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+              id="incomeTax-tab"
+              data-tabs-target="#incomeTax"
+              type="button"
+              role="tab"
+              aria-controls="incomeTax"
+              aria-selected="false"
+            >
+              Bài 3
+            </button>
+          </li>
+          <li role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+              id="cable-tab"
+              data-tabs-target="#cable"
+              type="button"
+              role="tab"
+              aria-controls="cable"
+              aria-selected="false"
+            >
+              Bài 4
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div id="exerciseTabContent">
+        <!-- ==================== BÀI 1: QUẢN LÝ TUYỂN SINH ==================== -->
+        <section
+          class="hidden p-6 bg-white rounded-lg shadow"
+          id="admission"
+          role="tabpanel"
+          aria-labelledby="admission-tab"
+        >
+          <h2 class="mb-4 text-2xl font-bold text-gray-900">
+            🏫 Quản lý tuyển sinh
+          </h2>
+
+          <!-- Gợi ý -->
+          <div id="accordion-admission" data-accordion="collapse" class="mb-6">
+            <h3 id="accordion-admission-heading">
+              <button
+                type="button"
+                class="flex items-center justify-between w-full p-4 font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50"
+                data-accordion-target="#accordion-admission-body"
+                aria-expanded="false"
+                aria-controls="accordion-admission-body"
+              >
+                <span>💡<b>Gợi ý:</b> Mở rộng để xem thêm</span>
+                <svg
+                  data-accordion-icon
+                  class="w-3 h-3 rotate-180 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5 5 1 1 5"
+                  />
+                </svg>
+              </button>
+            </h3>
+            <div
+              id="accordion-admission-body"
+              class="hidden"
+              aria-labelledby="accordion-admission-heading"
+            >
+              <div
+                class="p-4 text-sm text-gray-600 border border-t-0 border-gray-200 rounded-b-lg"
+              >
+                <ul class="space-y-2 list-disc ps-5">
+                  <li>
+                    Điểm chuẩn của hội đồng các bạn tự nhập thêm. Điểm chuẩn của
+                    3 môn thường tối đa 30đ. <br />
+                    Nên có thể lấy các điểm chuẩn như sau: 30,25,29
+                  </li>
+                  <li>
+                    Ô nhập khu vực, đối tượng có thể tạo bằng input, dropdown
+                    hoặc radio.<br />
+                    Nếu không thuộc khu vực hoặc đối tượng trong danh sách thì
+                    điểm khu vực và điểm đối tượng sẽ là 0
+                  </li>
+                  <li>
+                    Nếu có 1 trong 3 môn bị điểm 0 thì lặp tức cho rớt không cần
+                    kiểm tra tổng điểm có lớn hơn hoặc bằng điểm chuẩn hay không
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <form id="admissionForm">
+            <div class="mb-5">
+              <label
+                for="benchmarkScore"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Điểm chuẩn</label
+              >
+              <input
+                type="number"
+                id="benchmarkScore"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Nhập điểm chuẩn của hội đồng"
+              />
+            </div>
+
+            <div class="grid gap-5 mb-5 md:grid-cols-3">
+              <div>
+                <label
+                  for="subjectScore1"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Điểm môn 1</label
+                >
+                <input
+                  type="number"
+                  id="subjectScore1"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Môn 1"
+                />
+              </div>
+              <div>
+                <label
+                  for="subjectScore2"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Điểm môn 2</label
+                >
+                <input
+                  type="number"
+                  id="subjectScore2"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Môn 2"
+                />
+              </div>
+              <div>
+                <label
+                  for="subjectScore3"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Điểm môn 3</label
+                >
+                <input
+                  type="number"
+                  id="subjectScore3"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Môn 3"
+                />
+              </div>
+            </div>
+
+            <div class="grid gap-5 mb-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="area"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Khu vực</label
+                >
+                <select
+                  id="area"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                >
+                  <option value="X" selected>
+                    X - Không thuộc khu vực ưu tiên
+                  </option>
+                  <option value="A">Khu vực A</option>
+                  <option value="B">Khu vực B</option>
+                  <option value="C">Khu vực C</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="category"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Đối tượng</label
+                >
+                <select
+                  id="category"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                >
+                  <option value="0" selected>
+                    0 - Không thuộc đối tượng ưu tiên
+                  </option>
+                  <option value="1">Đối tượng 1</option>
+                  <option value="2">Đối tượng 2</option>
+                  <option value="3">Đối tượng 3</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="btnAdmission"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Tính kết quả
+            </button>
+          </form>
+
+          <div
+            id="admissionResult"
+            class="p-4 mt-6 text-sm text-blue-800 rounded-lg bg-blue-50"
+            role="alert"
+          >
+            👉 Kết quả:
+          </div>
+        </section>
+
+        <!-- ==================== BÀI 2: TÍNH TIỀN ĐIỆN ==================== -->
+        <section
+          class="hidden p-6 bg-white rounded-lg shadow"
+          id="electricity"
+          role="tabpanel"
+          aria-labelledby="electricity-tab"
+        >
+          <h2 class="mb-4 text-2xl font-bold text-gray-900">
+            🔋 Tính tiền điện
+          </h2>
+
+          <!-- Gợi ý -->
+          <div
+            id="accordion-electricity"
+            data-accordion="collapse"
+            class="mb-6"
+          >
+            <h3 id="accordion-electricity-heading">
+              <button
+                type="button"
+                class="flex items-center justify-between w-full p-4 font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50"
+                data-accordion-target="#accordion-electricity-body"
+                aria-expanded="false"
+                aria-controls="accordion-electricity-body"
+              >
+                <span>💡<b>Gợi ý:</b> Mở rộng để xem thêm</span>
+                <svg
+                  data-accordion-icon
+                  class="w-3 h-3 rotate-180 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5 5 1 1 5"
+                  />
+                </svg>
+              </button>
+            </h3>
+            <div
+              id="accordion-electricity-body"
+              class="hidden"
+              aria-labelledby="accordion-electricity-heading"
+            >
+              <div
+                class="p-4 text-sm text-gray-600 border border-t-0 border-gray-200 rounded-b-lg"
+              >
+                <p>
+                  Cách tính tiền điện gần giống với bài tính tiền Grab trên lớp
+                  <br />
+                  <img
+                    class="max-w-full h-auto mt-2"
+                    src="./img/Bai2.JPG"
+                    alt=""
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <form id="electricityForm">
+            <div class="grid gap-5 mb-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="customerName"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Họ tên</label
+                >
+                <input
+                  type="text"
+                  id="customerName"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Nhập họ tên"
+                />
+              </div>
+              <div>
+                <label
+                  for="kwUsed"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Số Kw tiêu thụ</label
+                >
+                <input
+                  type="number"
+                  id="kwUsed"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Nhập số Kw"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="btnElectricity"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Tính tiền điện
+            </button>
+          </form>
+
+          <div
+            id="electricityResult"
+            class="p-4 mt-6 text-sm text-blue-800 rounded-lg bg-blue-50"
+            role="alert"
+          >
+            👉 Kết quả:
+          </div>
+        </section>
+
+        <!-- ==================== BÀI 3: TÍNH THUẾ THU NHẬP CÁ NHÂN ==================== -->
+        <section
+          class="hidden p-6 bg-white rounded-lg shadow"
+          id="incomeTax"
+          role="tabpanel"
+          aria-labelledby="incomeTax-tab"
+        >
+          <h2 class="mb-4 text-2xl font-bold text-gray-900">
+            💰 Tính thuế thu nhập cá nhân
+          </h2>
+
+          <!-- Gợi ý -->
+          <div id="accordion-incomeTax" data-accordion="collapse" class="mb-6">
+            <h3 id="accordion-incomeTax-heading">
+              <button
+                type="button"
+                class="flex items-center justify-between w-full p-4 font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50"
+                data-accordion-target="#accordion-incomeTax-body"
+                aria-expanded="false"
+                aria-controls="accordion-incomeTax-body"
+              >
+                <span>💡<b>Gợi ý:</b> Mở rộng để xem thêm</span>
+                <svg
+                  data-accordion-icon
+                  class="w-3 h-3 rotate-180 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5 5 1 1 5"
+                  />
+                </svg>
+              </button>
+            </h3>
+            <div
+              id="accordion-incomeTax-body"
+              class="hidden"
+              aria-labelledby="accordion-incomeTax-heading"
+            >
+              <div
+                class="p-4 text-sm text-gray-600 border border-t-0 border-gray-200 rounded-b-lg"
+              >
+                <ul class="space-y-2 list-disc ps-5">
+                  <li>
+                    Tổng thu nhập năm các bạn tự nhập thêm. Giả sử 1 tháng thu
+                    nhập 10tr thì 1 năm sẽ là 10 x 12 = 120tr => các bạn sẽ nhập
+                    120000000
+                  </li>
+                  <li>
+                    Demo hiện tại đang tính % thuế theo điều kiện mà thu nhập
+                    chịu thuế rơi vào. Vd: thu nhập chịu thuế là 110tr thì tính
+                    10% của 110tr => 110tr * 0.1
+                  </li>
+                  <li>
+                    Do đề bài không ghi rõ yêu cầu tính thuế nên cũng có thể
+                    tính theo cách chia ra từng đoạn thuế giống bài tính tiền
+                    grab. Vd: 110tr => 60tr *0.05 + (110tr-60tr) * 0.1
+                  </li>
+                  <li>
+                    Sử dụng input có type number thì khi nhập 120000000, có thể
+                    nhập ngắn gọn thành 120e+6
+                  </li>
+                  <li>
+                    Đối với các con số hàng triệu có nhiều số 0, có thể viết
+                    ngắn gọn trong code như sau:<br />
+                    4tr => 4000000 => 4e+6
+                  </li>
+                  <li>
+                    Dùng NumberFormat để số tiền hiển thị đẹp hơn:
+                    <a
+                      href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat"
+                      target="_blank"
+                      class="font-medium text-blue-600 hover:underline"
+                      >NumberFormat</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <form id="incomeTaxForm">
+            <div class="mb-5">
+              <label
+                for="fullName"
+                class="block mb-2 text-sm font-medium text-gray-900"
+                >Họ tên</label
+              >
+              <input
+                type="text"
+                id="fullName"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="Nhập họ tên"
+              />
+            </div>
+            <div class="grid gap-5 mb-6 md:grid-cols-2">
+              <div>
+                <label
+                  for="annualIncome"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Tổng thu nhập năm</label
+                >
+                <input
+                  type="number"
+                  id="annualIncome"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Ví dụ: 120000000"
+                />
+              </div>
+              <div>
+                <label
+                  for="dependents"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Số người phụ thuộc</label
+                >
+                <input
+                  type="number"
+                  id="dependents"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Nhập số người phụ thuộc"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="btnIncomeTax"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Tính tiền thuế
+            </button>
+          </form>
+
+          <div
+            id="incomeTaxResult"
+            class="p-4 mt-6 text-sm text-blue-800 rounded-lg bg-blue-50"
+            role="alert"
+          >
+            👉 Kết quả:
+          </div>
+        </section>
+
+        <!-- ==================== BÀI 4: TÍNH TIỀN CÁP ==================== -->
+        <section
+          class="hidden p-6 bg-white rounded-lg shadow"
+          id="cable"
+          role="tabpanel"
+          aria-labelledby="cable-tab"
+        >
+          <h2 class="mb-4 text-2xl font-bold text-gray-900">
+            🕸️ Tính tiền cáp
+          </h2>
+
+          <!-- Gợi ý -->
+          <div id="accordion-cable" data-accordion="collapse" class="mb-6">
+            <h3 id="accordion-cable-heading">
+              <button
+                type="button"
+                class="flex items-center justify-between w-full p-4 font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50"
+                data-accordion-target="#accordion-cable-body"
+                aria-expanded="false"
+                aria-controls="accordion-cable-body"
+              >
+                <span>💡<b>Gợi ý:</b> Mở rộng để xem thêm</span>
+                <svg
+                  data-accordion-icon
+                  class="w-3 h-3 rotate-180 shrink-0"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 10 6"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5 5 1 1 5"
+                  />
+                </svg>
+              </button>
+            </h3>
+            <div
+              id="accordion-cable-body"
+              class="hidden"
+              aria-labelledby="accordion-cable-heading"
+            >
+              <div
+                class="p-4 text-sm text-gray-600 border border-t-0 border-gray-200 rounded-b-lg"
+              >
+                <ul class="space-y-2 list-disc ps-5">
+                  <li>
+                    Sử dụng event onchange của dropdown để xử lý ẩn hiện cho ô
+                    nhập số kết nối khi chọn loại khách hàng:
+                    <a
+                      href="https://www.w3schools.com/jsref/event_onchange.asp"
+                      target="_blank"
+                      class="font-medium text-blue-600 hover:underline"
+                      >Onchange</a
+                    >
+                  </li>
+                  <li>
+                    Đối với loại khách hàng Doanh Nghiệp, tổng 10 kết nối đầu là
+                    75$ <br />
+                    => đây là giá trọn gói, nếu doanh nghiệp lắp đặt số kết nối
+                    nhỏ hơn 10 thì vẫn phải đóng 75$.<br />
+                    Vd: 6 kết nối thì vẫn sẽ cộng 75$ vào tổng tiền.<br />
+                    => Nếu lắp trên 10 kết nối thì kết nối thứ 11 trở đi sẽ tính
+                    5$/kết nối.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <form id="cableForm">
+            <div class="grid gap-5 mb-5 md:grid-cols-2">
+              <div>
+                <label
+                  for="customerId"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Mã khách hàng</label
+                >
+                <input
+                  type="text"
+                  id="customerId"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Nhập mã khách hàng"
+                />
+              </div>
+              <div>
+                <label
+                  for="customerType"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Loại khách hàng</label
+                >
+                <select
+                  id="customerType"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                >
+                  <option value="" selected>-- Chọn loại khách hàng --</option>
+                  <option value="residential">Nhà dân</option>
+                  <option value="business">Doanh nghiệp</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid gap-5 mb-6 md:grid-cols-2">
+              <div id="connectionsGroup">
+                <label
+                  for="connections"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Số kết nối</label
+                >
+                <input
+                  type="number"
+                  id="connections"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Nhập số kết nối"
+                />
+              </div>
+              <div>
+                <label
+                  for="premiumChannels"
+                  class="block mb-2 text-sm font-medium text-gray-900"
+                  >Số kênh cao cấp</label
+                >
+                <input
+                  type="number"
+                  id="premiumChannels"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="Nhập số kênh cao cấp"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="btnCable"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+            >
+              Tính tiền cáp
+            </button>
+          </form>
+
+          <div
+            id="cableResult"
+            class="p-4 mt-6 text-sm text-blue-800 rounded-lg bg-blue-50"
+            role="alert"
+          >
+            👉 Kết quả:
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="py-6 text-sm text-center text-gray-500">
+      Bài tập JS Buổi 5 - CyberSoft
+    </footer>
+
+    <!-- Flowbite JS (tabs, accordion) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="./main.js"></script>
   </body>
 </html>

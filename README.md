@@ -9,10 +9,10 @@ Bài tập javascript:
 
 # Nội dung
 
-Bài 1: Quản lý tuyển sinh
-Bài 2: Tính tiền điện
-Bài 3: Tính thuế TNCN
-Bài 4: Tính tiền cáp
+- Bài 1: Quản lý tuyển sinh
+- Bài 2: Tính tiền điện
+- Bài 3: Tính thuế TNCN
+- Bài 4: Tính tiền cáp
 
 # Cách chạy
 

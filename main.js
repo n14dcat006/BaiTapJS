@@ -86,3 +86,68 @@ function calculateAdmission() {
     resultDiv.innerHTML = `👉 Kết quả: Bạn đã đậu. Tổng điểm: ${totalScore} >= điểm chuẩn`;
   }
 }
+
+/**
+ * Bài tập 2: Tính tiền điện
+ * input:
+ * - Họ tên khách hàng: Chuỗi
+ * - Số kw tiêu thụ: Số >=0
+ *
+ * xử lý:
+ * if (số kw <= 50){
+ *    số tiền điện = số kw * 500}
+ * else if (số kw <= 100){
+ *   số tiền điện = 50 * 500 + (số kw - 50) * 650}
+ * else if (số kw <= 200){
+ *   số tiền điện = 50 * 500 + 50 * 650 + (số kw - 100) * 850}
+ * else if (số kw <= 350){
+ *   số tiền điện = 50 * 500 + 50 * 650 + 100 * 850 + (số kw - 200) * 1100}
+ * else {
+ *   số tiền điện = 50 * 500 + 50 * 650 + 100 * 850 + 150 * 1100 + (số kw - 350) * 1300}
+ *
+ *
+ * Output:
+ * - Họ tên khách hàng: xxx
+ * - Số kw tiêu thụ: xxx kw
+ * - Số tiền điện: xxx VNĐ
+ */
+function tier1(kw) {
+  return kw * 500;
+}
+function tier2(kw) {
+  return 50 * 500 + (kw - 50) * 650;
+}
+function tier3(kw) {
+  return 50 * 500 + 50 * 650 + (kw - 100) * 850;
+}
+function tier4(kw) {
+  return 50 * 500 + 50 * 650 + 100 * 850 + (kw - 200) * 1100;
+}
+function tier5(kw) {
+  return 50 * 500 + 50 * 650 + 100 * 850 + 150 * 1100 + (kw - 350) * 1300;
+}
+function calculateElectricity() {
+  const customerName = document.getElementById("customerName").value;
+  const kwUsed = document.getElementById("kwUsed").value * 1;
+  let electricityBill = 0;
+
+  if (kwUsed <= 50) {
+    electricityBill = tier1(kwUsed);
+  } else if (kwUsed <= 100) {
+    electricityBill = tier2(kwUsed);
+  } else if (kwUsed <= 200) {
+    electricityBill = tier3(kwUsed);
+  } else if (kwUsed <= 350) {
+    electricityBill = tier4(kwUsed);
+  } else {
+    electricityBill = tier5(kwUsed);
+  }
+
+  const resultDiv = document.getElementById("electricityResult");
+  resultDiv.innerHTML = `
+        👉 Kết quả:
+        <p>Họ tên khách hàng: ${customerName}</p>
+        <p>Số kw tiêu thụ: ${kwUsed} kw</p>
+        <p>Số tiền điện: ${electricityBill.toLocaleString("vi-VN")} VNĐ</p>
+    `;
+}
